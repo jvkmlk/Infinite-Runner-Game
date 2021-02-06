@@ -12,7 +12,6 @@ var score=0;
 
 var gameOver, restart;
 
-localStorage["HighestScore"] = 0;
 
 function preload(){
   trex_running =   loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -47,10 +46,10 @@ function setup() {
   ground.x = ground.width /2;
   ground.velocityX = -(6 + 3*score/100);
   
-  gameOver = createSprite(300,100);
+  gameOver = createSprite(100,100);
   gameOver.addImage(gameOverImg);
   
-  restart = createSprite(300,140);
+  restart = createSprite(100,140);
   restart.addImage(restartImg);
   
   gameOver.scale = 0.5;
@@ -70,7 +69,7 @@ function setup() {
 
 function draw() {
   //trex.debug = true;
-  background("white");
+  background(255);
   text("Score: "+ score, 500,50);
   
   if (gameState===PLAY){
@@ -117,6 +116,9 @@ function draw() {
     }
   }
   
+    //camera
+      camera.position.x = trex.x;
+      camera.position.y = trex.y;
   
   drawSprites();
 }
@@ -184,11 +186,6 @@ function reset(){
   cloudsGroup.destroyEach();
   
   trex.changeAnimation("running",trex_running);
-  
-  if(localStorage["HighestScore"]<score){
-    localStorage["HighestScore"] = score;
-  }
-  console.log(localStorage["HighestScore"]);
   
   score = 0;
   
